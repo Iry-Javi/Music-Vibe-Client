@@ -1,4 +1,4 @@
-// import { Link } from "react-router-dom"
+import { Link } from "react-router-dom"
 import { useState, useContext } from "react";
 import axios from "axios";
 import {AuthContext} from "../context/auth.context"
@@ -33,25 +33,42 @@ const HomePage = props => {
 
     return (
     <>
+      <div>
+        <p>Welcome to the Music Vibe World</p>
+      </div>
         <div>
-            {/* <h1>Home Page</h1> */}
-            <p>Welcome to the Music Vibe World</p>
-        </div>
-        
-        <div>
-            {user && user.image && <img src={user.image} alt={"profile_image"} style={{width: '80px', height: '80px', borderRadius: '75%'}} />}
-            {/* {isLoggedIn && <button onClick={logOutUser}>Log out</button>} */}
-            {isLoggedIn && <form onSubmit={handleSubmit}>
-                <input type="file" onChange={(e) => handleFileUpload(e)} />
-                <button type="submit">Save profile image</button>
-                </form>}
-            {!isLoggedIn && <>
-                {/* <Link to={'/signup'}><button>Signup</button></Link>
-                <Link to={'/login'}><button>Login</button></Link> */}
-        </>}
-    </div>
+          <Link to="/addconcerts"><button>Add Concert</button></Link>      
+          <Link to="/concerts"><button>All Concerts</button></Link>
+          <Link to="/singleconcert"><button>Single Concert</button></Link>
+          <br/>
+          <br/>
+          {user && user.image && <img src={user.image} alt={"profile_image"} style={{width: '80px', height: '80px', borderRadius: '75%'}} />}
+          <br/>
+          {isLoggedIn && <form onSubmit={handleSubmit}>
+          <input type="file" onChange={(e) => handleFileUpload(e)} />
+          {/* {isLoggedIn && <button onClick={logOutUser}>Log out</button>} */}
+          </form>}
+          <br/>
+          <button type="submit">Save profile image</button>
+          <br/>
+          {!isLoggedIn && (
+        <>
+          <Link to="/signup"> <button>Sign Up</button> </Link>
+          <Link to="/login"> <button>Login</button> </Link>
+        </>
+      )}
+      <br/>
+          
+
+            {/* {!isLoggedIn && <>
+                <Link to={'/signup'}><button>Signup</button></Link>
+                <Link to={'/login'}><button>Login</button></Link>} */}
+                
+      </div>
     </>
  )
 }
 
 export default HomePage
+
+

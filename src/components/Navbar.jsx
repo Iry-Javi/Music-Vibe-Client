@@ -1,4 +1,3 @@
-
 import { Link } from "react-router-dom";
 import { useContext } from "react";                    
 import { AuthContext } from "../context/auth.context";
@@ -16,12 +15,9 @@ function Navbar() {
 
       {isLoggedIn && (
         <>
-        <Link to="/addconcert">
-            <button>Add Concert</button>
-          </Link>      
-          <Link to="/concerts">
-            <button>All Concerts</button>
-          </Link>        
+        {/* <Link to="/addconcerts"><button>Add Concert</button></Link>      
+        <Link to="/concerts"><button>All Concerts</button></Link>
+        <Link to="/singleconcert"><button>Single Concert</button></Link>          */}
           <button onClick={logOutUser}>Logout</button>
         </>
       )}
