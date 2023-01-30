@@ -9,6 +9,7 @@ import SingleConcert from './pages/SingleConcert';
 import EditConcert from './pages/EditConcert';
 import ConcertCard from './components/ConcertCard';
 import ConcertDetails from './components/ConcertDetails';
+import ProfilePage from './pages/ProfilePage';
 import './App.css';
 
 
@@ -26,10 +27,11 @@ function App() {
         <Route path="/addconcerts" element={<AddConcert />} />
         <Route path='/signup' element={<SignupPage />}/>
         <Route path='/login' element={<LoginPage />} />
-        <Route path='/singleconcert' element={<SingleConcert/>} />
-        <Route path='/editconcert' element={<EditConcert/>} />
+        <Route path='/singleconcert/:concertId' element={<SingleConcert/>} />
+        <Route path='/concerts/edit/:concertId' element={<EditConcert/>} />
         <Route path='/cardconcerts' element={<ConcertCard/>} />
         <Route path='/detailsconcerts' element={<ConcertDetails/>} />
+        <Route path='/profile' element={<ProfilePage/>} />
       </Routes>
       </div>
           </div>

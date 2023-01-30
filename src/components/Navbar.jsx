@@ -12,16 +12,14 @@ function Navbar() {
         <button><img src={Home} className="card-img-top " alt="..." style={{width: '60px', height: '60px'}}/></button>
       </Link>
       {user && <span>Welcome back {user.username}</span>}
-
+    
       {isLoggedIn && (
         <>
-        {/* <Link to="/addconcerts"><button>Add Concert</button></Link>      
-        <Link to="/concerts"><button>All Concerts</button></Link>
-        <Link to="/singleconcert"><button>Single Concert</button></Link>          */}
+        <Link to="/profile"> <button>Profile</button> </Link>    
+        <Link to="/concerts"><button>All Concerts</button></Link>           
           <button onClick={logOutUser}>Logout</button>
         </>
       )}
- 
       {!isLoggedIn && (
         <>
           <Link to="/signup"> <button>Sign Up</button> </Link>
