@@ -1,40 +1,118 @@
-import { useEffect, useState } from "react";
 import axios from 'axios';
-import { useParams } from "react-router-dom";
-import ConcertCard from "../components/ConcertCard";
-
+import { Link } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 
 function SingleConcert() {
-  
+const [concert, setConcert] = useState({});
+const {concertId}=useParams()
 
-    const [ concerts, setConcertData ] = useState(null);
-    const { id } = useParams();
 
-    
-      const getSingleConcert = () => {
-        const storedToken = localStorage.getItem('authToken')
+const getOneConcert = () => {
+    const storedToken = localStorage.getItem('authToken')
 
-        axios.get(`${process.env.REACT_APP_API_URL}/api/concerts `,  { headers: { Authorization: `Bearer ${storedToken}`}})
-        .then(response => 
-          setConcertData(response.data));
-        }
-
-    useEffect(() => {
-      getSingleConcert ()
-    });
-
-    return (
-        <>
-        <div className="ConcertList">
-        {concerts.map((concert) => 
-        <ConcertCard key ={concert.concert_id} {...concert} />)
-        }     
-            </div>
-        </>
-    );
+    axios
+    .get(`${process.env.REACT_APP_API_URL}/api/concerts/${concertId}`, { headers: { Authorization: `Bearer ${storedToken}`}})
+    .then((response) => {
+    setConcert(response.data);
+    })
 }
 
-export default SingleConcert;
+useEffect(() => {
+    getOneConcert();
+    // eslint-disable-next-line
+}, [] );
+
+    return (
+        <div>    
+            <div className="col" key={concert._id}>
+            <div className="card mb-3 p-2 h-100" style={{maxWidth: '540px'}}>
+            <div className="row g-0"></div>
+            <div className="col-md-4"></div>
+            
+            </div>
+            <div className="col-md-8">
+            <div className="card-body">
+                <h5 className="card-title">
+                <Link to={`/concerts/${concert._id}`}>Title: {concert.title}</Link>
+                <img src={concert.image} className="img-fluid rounded-start" alt="..." style={{objectFit: 'scale-down', width: '200px', height: '200px'}}/>
+                <Link to={`/concerts/${concert.description}`}>Description: {concert.description}</Link>
+                <Link to={`/concerts/${concert.country}`}>Country: {concert.country}</Link>
+                <Link to={`/concerts/${concert.city}`}>City: {concert.city}</Link>
+                <Link to={`/concerts/${concert.street}`}>Street: {concert.street}</Link>
+                <Link to={`/concerts/${concert.houseNumber}`}>House Number: {concert.houseNumber}</Link>
+                <Link to={`/concerts/${concert.postalCode}`}>Postal Code: {concert.postalCode}</Link>
+                </h5>
+                <div className="ConcertDetails"> 
+                <Link to="/concerts"><button>Back to concert</button></Link>
+                {concert &&  (<Link to={`/concerts/edit/${concert._id}`}><button>Edit Concert</button></Link>)}     
+                </div>                          
+            </div>
+            </div>
+            </div>       
+        </div>
+  )
+}
+
+export default SingleConcert
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// import { useEffect, useState } from "react";
+// import axios from 'axios';
+// import { useParams } from "react-router-dom";
+// import ConcertCard from "../components/ConcertCard";
+
+
+// function SingleConcert() {
+  
+
+//     const [ concerts, setConcertData ] = useState(null);
+//     const { id } = useParams();
+
+    
+//       const getSingleConcert = () => {
+//         const storedToken = localStorage.getItem('authToken')
+
+//         axios.get(`${process.env.REACT_APP_API_URL}/api/concerts `,  { headers: { Authorization: `Bearer ${storedToken}`}})
+//         .then(response => 
+//           setConcertData(response.data));
+//         }
+
+//     useEffect(() => {
+//       getSingleConcert ()
+//     });
+
+//     return (
+//         <>
+//         <div className="ConcertList">
+//         {concerts.map((concert) => 
+//         <ConcertCard key ={concert.concert_id} {...concert} />)
+//         }     
+//             </div>
+//         </>
+//     );
+// }
+
+// export default SingleConcert;
 
 
 

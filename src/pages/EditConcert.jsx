@@ -4,7 +4,7 @@ import axios from "axios";
  
 function EditConcert(props) {
     const [title, setTitle] = useState("");
-    const [imageUrl, setImageUrl] = useState("");
+    const [image, setImage] = useState("");
     const [description, setDescription] = useState("");
     const [country, setCountry] = useState("");
     const [city, setCity] = useState("");
@@ -19,20 +19,17 @@ function EditConcert(props) {
  
   const handleSubmit = (e) => {
     e.preventDefault();
-    const storedToken = localStorage.getItem('authToken');
+    
 
-    const updatedConcert = {title, imageUrl, description, country, city, street, houseNumber, postalCode}
-    axios.put(`${process.env.REACT_APP_API_URL}/api/concerts/${concertId}`, updatedConcert, { headers: { Authorization: `Bearer ${storedToken}` } })
+    const updatedConcert = {title, image, description, country, city, street, houseNumber, postalCode}
+    axios.put(`${process.env.REACT_APP_API_URL}/api/concerts/${concertId}`, updatedConcert)
         .then(() => navigate(`/concerts/${concertId}`))
         .catch(err => console.log(err))
-
   }
 
   const deleteConcert = () => {                    
-    const storedToken = localStorage.getItem('authToken');
-
     axios
-      .delete(`${process.env.REACT_APP_API_URL}/api/concerts/${concertId}`, { headers: { Authorization: `Bearer ${storedToken}` } })
+      .delete(`${process.env.REACT_APP_API_URL}/api/concerts/${concertId}`)
       .then(() => {
         navigate("/concerts");
       })
@@ -47,7 +44,7 @@ function EditConcert(props) {
 
          const oneConcert = response.data;
          setTitle(oneConcert.title);
-         setImageUrl(oneConcert.imageUrl);
+         setImage(oneConcert.image);
          setDescription(oneConcert.description);
          setCountry(oneConcert.country);
          setCity(oneConcert.city);
@@ -71,7 +68,7 @@ function EditConcert(props) {
             </div>
             <div className="form-floating mb-3">
             <label>Image</label>
-                <input type="text" value={imageUrl} onChange={(e)=> setImageUrl(e.target.value)} name="image_Url" className="form-control" placeholder="Image"/>
+                <input type="text" value={image} onChange={(e)=> setImage(e.target.value)} name="image" className="form-control" placeholder="Image"/>
             </div>
             <div className="form-floating mb-3">
             <label>Description</label>
@@ -99,7 +96,7 @@ function EditConcert(props) {
             </div>
 
             <div>
-                <button type="submit" className="btn btn-info text-light">Edit Concert</button>
+                <input type="submit" value="Submit" />
             </div>
             </form>
 

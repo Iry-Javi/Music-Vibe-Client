@@ -1,47 +1,46 @@
-import { useState, useEffect } from "react";
-import axios from "axios";
-import { Link, useParams } from "react-router-dom";
-import ConcertCard from "./ConcertCard";
+// import { useState, useEffect } from "react";
+// import axios from "axios";
+// import { Link, useParams } from "react-router-dom";
+// import ConcertCard from "./ConcertCard";
  
  
-function ConcertDetails (props) {
-  const [concert, setConcert] = useState(null);
+// function ConcertDetails (props) {
+//   const [concert, setConcert] = useState(null);
   
-  const {concertId} = useParams()
+//   const {concertId} = useParams()
 
-  const getConcert = () => {
-    const storedToken = localStorage.getItem("authToken");
+//   const getConcert = () => {
+//     const storedToken = localStorage.getItem("authToken");
 
-    axios
-      .get(`${process.env.REACT_APP_API_URL}/api/projects/${concertId}`, { headers: { Authorization: `Bearer ${storedToken}` } })
-      .then((response) => {
-        const oneConcert = response.data;
-        setConcert(oneConcert);
-      })
-      .catch((error) => console.log(error));
-  };
+//     axios
+//       .get(`${process.env.REACT_APP_API_URL}/api/concerts/${concertId}`, { headers: { Authorization: `Bearer ${storedToken}` } })
+//       .then((response) => {
+//         const oneConcert = response.data;
+//         setConcert(oneConcert);
+//       })
+//       .catch((error) => console.log(error));
+//   };
  
-  useEffect(()=>{
-        getConcert()
-        // eslint-disable-next-line
-  }, [concertId])
+//   useEffect(()=>{
+//         getConcert()
+//         // eslint-disable-next-line
+//   }, [concertId])
   
-  return (
-    <div className="ConcertDetails">
-      {concert && (
-        <>
-          <ConcertCard {...concert} />
-        </>
-      )}
+//   return (
+//     <div className="ConcertDetails">
+//       {concert &&  (
+//         <>
+//           <ConcertCard {...concert} />
+//         </>
+//       )}
  
-      <Link to="/concerts"><button>Back to concert</button></Link>
-      <Link to={`/concerts/edit/${concertId}`}><button>Edit Concert</button>
-      </Link>      
-    </div>
-  );
-}
+//       {/* <Link to="/concerts"><button>Back to concert</button></Link> */}
+//       {concert &&  (<Link to={`/concerts/edit/${concert._id}`}><button>Edit Concert</button></Link>)}      
+//     </div>
+//   );
+// }
  
-export default ConcertDetails;
+// export default ConcertDetails;
 
 
 

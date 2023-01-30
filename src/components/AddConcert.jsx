@@ -1,34 +1,53 @@
-import {useState} from 'react';
+import {useState, useContext} from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import {AuthContext} from "../context/auth.context"
 
 function NewConcert() {
-
+    const { concert, setConcert } = useContext(AuthContext);
     const navigate = useNavigate();
     const [title, setTitle] = useState("");
-    const [imageUrl, setImageUrl] = useState("");
+    const [image, setImage] = useState("");
     const [description, setDescription] = useState("");
     const [country, setCountry] = useState("");
     const [city, setCity] = useState("");
     const [street, setStreet] = useState("");
     const [houseNumber, setHouseNumber] = useState("");
     const [postalCode, setPostalCode] = useState("");
+    const handleFileUpload = (e) => {
+     
+        const uploadData = new FormData();
+     
+        uploadData.append("image", e.target.files[0]);
+     
+        axios.post(`${process.env.REACT_APP_API_URL}/api/upload`, uploadData)
+          .then(response => {
+            setImage(response.data.image);
+          })
+          .catch(err => console.log("Error while uploading the file: ", err));
+      };
     
 
     const handleSubmit =  (e) => {
         e.preventDefault();
         const storedToken = localStorage.getItem('authToken');
         const addConcert = {
-            title, imageUrl, description, country,
+            title, image, description, country,
             city, street, postalCode, houseNumber
         }
         console.log({addConcert})
         axios
         .post(`${process.env.REACT_APP_API_URL}/api/concerts`, addConcert, { headers: { Authorization: `Bearer ${storedToken}`}})
         .then(() => {
-            setTitle(''); setImageUrl(''); setDescription(''); setCountry(''); setCity(''); setStreet(''); setHouseNumber(''); setPostalCode('');
+            setTitle(''); setImage(''); setDescription(''); setCountry(''); setCity(''); setStreet(''); setHouseNumber(''); setPostalCode('');
           navigate("/concerts");
         });
+        axios.put(`${process.env.REACT_APP_API_URL}/api/users`, {...concert, image})
+            .then((response)=> {
+                setConcert(response.data.updatedConcert);
+                setImage("")
+            })
+            .catch(err => console.error(err))
     };
 
     return (  
@@ -42,7 +61,10 @@ function NewConcert() {
             </div>
             <div className="form-floating mb-3">
             <label>Image</label>
-                <input type="text" value={imageUrl} onChange={(e)=> setImageUrl(e.target.value)} name="image_Url" className="form-control" placeholder="Image"/>
+                {concert && concert.image && <img src={concert.image} alt={"concert_image"} style={{width: '80px', height: '80px'}} />}
+                <form onSubmit={handleSubmit}>
+                <input type="file" onChange={(e) => handleFileUpload(e)} />
+                </form>
             </div>
             <div className="form-floating mb-3">
             <label>Description</label>
@@ -68,12 +90,13 @@ function NewConcert() {
             <label>PostalCode</label>
                 <input type="text" value={postalCode} onChange={(e) => setPostalCode(e.target.value)} name="postal_code" className="form-control" placeholder="Postal code"/>
             </div>
-
+            </form>
             <div>
                 <button type="submit" className="btn btn-info text-light">Add New Concert</button>
             </div>
-            </form>
-        </div>     
+            
+        </div>    
+     
     </div>
   )
   }
