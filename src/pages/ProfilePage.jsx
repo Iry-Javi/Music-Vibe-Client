@@ -5,7 +5,7 @@ import {AuthContext} from "../context/auth.context"
 
 const ProfilePage = props => {
     const [image, setImage] = useState("");
-    const { user, setUser, isLoggedIn, logOutUser } = useContext(AuthContext);
+    const { user, setUser, isLoggedIn, } = useContext(AuthContext);
 
     const handleFileUpload = (e) => {
      
@@ -37,14 +37,14 @@ const ProfilePage = props => {
           <p>Welcome {user.username}</p>
         </div>
         <div>
-            {user && user.image && <img src={user.image} alt={"profile_image"} style={{width: '80px', height: '80px', borderRadius: '75%'}} />}
+            {/* {user && user.image && <img src={user.image} alt={"profile_image"} style={{width: '80px', height: '80px', borderRadius: '75%'}} />} */}
             {!isLoggedIn && (
         <>
           <Link to="/signup"> <button>Sign Up</button> </Link>
           <Link to="/login"> <button>Login</button> </Link>
         </>
       )} 
-            {isLoggedIn && <button onClick={logOutUser}>Log out</button>}
+            {/* {isLoggedIn && <button onClick={logOutUser}>Log out</button>} */}
             {isLoggedIn && 
               <form onSubmit={handleSubmit}>
               <input type="file" onChange={(e) => handleFileUpload(e)} />

@@ -1,8 +1,11 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
+import {AuthContext} from "../context/auth.context"
+import {useContext} from 'react';
  
 function EditConcert(props) {
+  const { concert} = useContext(AuthContext);
     const [title, setTitle] = useState("");
     const [image, setImage] = useState("");
     const [description, setDescription] = useState("");
@@ -11,6 +14,17 @@ function EditConcert(props) {
     const [street, setStreet] = useState("");
     const [houseNumber, setHouseNumber] = useState("");
     const [postalCode, setPostalCode] = useState("");
+
+        const handleFileUpload = (e) => {
+        const uploadData = new FormData();
+        uploadData.append("image", e.target.files[0]);
+     
+        axios.post(`${process.env.REACT_APP_API_URL}/api/upload`, uploadData)
+          .then(response => {
+            setImage(response.data.image);
+          })
+          .catch(err => console.log("Error while uploading the file: ", err));
+      };
 
 
   const { concertId } = useParams();  
@@ -60,45 +74,34 @@ function EditConcert(props) {
   return (
     <div className="EditConcert">
       <h3>Edit the Concert</h3>
- 
       <form onSubmit={handleSubmit}>
-            <div className="form-floating mb-3">
-            <label>Title</label>
-                <input type="text" value={title} onChange={(e)=> setTitle(e.target.value)} name="title" className="form-control" placeholder="Title"/>
-            </div>
-            <div className="form-floating mb-3">
-            <label>Image</label>
-                <input type="text" value={image} onChange={(e)=> setImage(e.target.value)} name="image" className="form-control" placeholder="Image"/>
-            </div>
-            <div className="form-floating mb-3">
-            <label>Description</label>
-                <input type="text" value={description} onChange={(e)=> setDescription(e.target.value)} name="description" className="form-control" placeholder="Description"/>
-            </div>
-            <div className="form-floating mb-3">
-            <label>Country</label>
-                <input type="text" value={country} onChange={(e) => setCountry(e.target.value)} name="country" className="form-control" placeholder="Country"/>
-            </div>
-            <div className="form-floating mb-3">
-            <label>City</label>
-                <input type="text" value={city} onChange={(e) => setCity(e.target.value)} name="city" className="form-control" placeholder="City"/>
-            </div>
-            <div className="form-floating mb-3">
-            <label>Street</label>
-                <input type="text" value={street} onChange={(e) => setStreet(e.target.value)} name="street" className="form-control" placeholder="Street"/>
-            </div>
-            <div className="form-floating mb-3">
-            <label>House number</label>
-                <input type="text" value={houseNumber} onChange={(e) => setHouseNumber(e.target.value)} name="house_number" className="form-control" placeholder="House number"/>
-            </div>
-            <div className="form-floating mb-3">
-            <label>PostalCode</label>
-                <input type="text" value={postalCode} onChange={(e) => setPostalCode(e.target.value)} name="postal_code" className="form-control" placeholder="Postal code"/>
-            </div>
+
+                <input type="text" value={title} onChange={(e)=> setTitle(e.target.value)} name="title" className="form-control" placeholder='Title'/>
+                <br/>
+                <input type="text" value={description} onChange={(e)=> setDescription(e.target.value)} name="description" className="form-control" placeholder='Description'/>
+                <br/>
+                <input type="text" value={country} onChange={(e) => setCountry(e.target.value)} name="country" className="form-control" placeholder='Country'/>
+                <br/>
+                <input type="text" value={city} onChange={(e) => setCity(e.target.value)} name="city" className="form-control" placeholder='City'/>
+                <br/>
+                <input type="text" value={street} onChange={(e) => setStreet(e.target.value)} name="street" className="form-control" placeholder='Street'/>
+                <br/>
+                <input type="text" value={houseNumber} onChange={(e) => setHouseNumber(e.target.value)} name="house_number" className="form-control" placeholder='House number'/>
+                <br/>
+                <input type="text" value={postalCode} onChange={(e) => setPostalCode(e.target.value)} name="postal_code" className="form-control" placeholder='Postal code'/>
+                <br/>
+
+                {concert && concert.image && <img src={concert.image} alt={"concert_image"} style={{width: '80px', height: '80px'}} />}
+                <form onSubmit={handleSubmit}>
+                <input type="file" onChange={(e) => handleFileUpload(e)} name="image" className="form-control" placeholder='Image'/>
+                </form>
+                <br/>
 
             <div>
                 <input type="submit" value="Submit" />
             </div>
             </form>
+            <p>Or</p>
 
       <button onClick={deleteConcert}>Delete Concert</button>
     </div>
