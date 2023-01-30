@@ -1,41 +1,35 @@
 // import { useEffect, useState } from "react";
 // import { useSearchParams } from "react-router-dom";
-// import ConcertDetails from "../components/ConcertDetails";
+// import ConcertCard from "../components/ConcertCard";
 // import axios from 'axios';
-
-
 
 // function Search() {
 //     const [ filteredConcerts, setFilteredConcerts ] = useState(null);
 //     const [searchParams, setSearchParams ] = useSearchParams();
 //     const s = searchParams.get('s');
 
-    
 //         const getSearchConcerts = () => {
-//             const storedToken = localStorage.getItem('authToken')
-
-//         axios.get(`${process.env.REACT_APP_API_URL}/api/concerts`, { headers: { Authorization: `Bearer ${storedToken}`}});
+//             axios.get(`${process.env.REACT_APP_API_URL}/api/concerts`)
 //             .then((response) => {
-//                 setSearchParams (response.data)
+//                 const data = response.data
+//                 .then((response) =>{
+//                     setSearchParams(response.data)
+//                 const filteredList = data.filter(el => el.name.toLowerCase().includes(s.toLowerCase()))
+//                 return setFilteredConcerts(filteredList)
+//                 })
 //             })
-//             const filteredList = data.filter(el => el.name.toLowerCase().includes(s.toLowerCase()))
-//             return setFilteredConcerts(filteredList)                  
+//         }
+//             useEffect(() => {
+//                 getSearchConcerts()
+//             }, [s])                
 //         }
 
-
-//     useEffect(() => {
-//         getSearchConcerts()
-//     }, [s])
-
-
-//     if ( !filteredConcerts ) return <p>Loading...</p>
-
-//     return(
-//         <>
-//             { filteredConcerts.map(concert => <ConcertDetails concertData={ concert } key={ concert._id } />)}
-//         </>
+//     return (        
+//     <>
+//         { filteredConcerts.map(concert => 
+//         <ConcertCard concertData={ concert } key={ concert._id } />)}
+//     </>
 //     )
-
-//     }
+// }
 
 // export default Search;
