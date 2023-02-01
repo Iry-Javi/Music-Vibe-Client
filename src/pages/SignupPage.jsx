@@ -21,22 +21,26 @@ const SignupPage = () => {
   
     }
     return (
-        <div>
-            <h1>Sign up Page</h1>
-
-            <form onSubmit={handleSubmit}>
-            <label>Username</label>
-            <input type="text" name="username" value={user.username} onChange={handleChange} />
-            <br />
-            <label>Email</label>
-            <input type="text" name="email" value={user.email}  onChange={handleChange} />
-            <br />
-            <label>Password</label>
-            <input type="password" name="password" value={user.password}  onChange={handleChange} />
-            <br />
-            <button type="submit">Create the account</button>
-        </form>
-        </div>
+        <div class="card width: 18rem;">
+  <div class="card-header">
+    Signup
+  </div>
+  <ul class="list-group list-group-flush">
+    <li class="list-group-item">   
+         <form onSubmit={handleSubmit}>
+            
+            <input className="form-control mb-2" type="text" name="username" value={user.username} onChange={handleChange} placeholder= "Username"/>
+            
+            <input className="form-control mb-2" type="text" name="email" value={user.email}  onChange={handleChange} placeholder= "Email"/>
+            
+            <input className="form-control" type="password" name="password" value={user.password}  onChange={handleChange} placeholder= "Password"/>
+            
+            <button type="submit" className="btn btn-light m-1 ">Signup</button>
+           </form>
+        </li>
+   
+    </ul>
+</div>
     )
 }
 

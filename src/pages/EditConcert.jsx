@@ -3,6 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import {AuthContext} from "../context/auth.context"
 import {useContext} from 'react';
+import { Link } from 'react-router-dom';
  
 function EditConcert(props) {
   const { concert} = useContext(AuthContext);
@@ -37,7 +38,7 @@ function EditConcert(props) {
 
     const updatedConcert = {title, image, description, country, city, street, houseNumber, postalCode}
     axios.put(`${process.env.REACT_APP_API_URL}/api/concerts/${concertId}`, updatedConcert)
-        .then(() => navigate(`/concerts/${concertId}`))
+        .then(() => navigate(`/concerts/`))
         .catch(err => console.log(err))
   }
 
@@ -65,6 +66,7 @@ function EditConcert(props) {
          setStreet(oneConcert.street);
          setHouseNumber(oneConcert.houseNumber);
          setPostalCode(oneConcert.postalCode);
+         
 
        })
        .catch((error) => console.log(error));
@@ -91,7 +93,7 @@ function EditConcert(props) {
                 <input type="text" value={postalCode} onChange={(e) => setPostalCode(e.target.value)} name="postal_code" className="form-control" placeholder='Postal code'/>
                 <br/>
 
-                {concert && concert.image && <img src={concert.image} alt={"concert_image"} style={{width: '80px', height: '80px'}} />}
+                {concert && concert.image && <img src={concert.image} alt={"concert_image"} style={{width: '300', height: '300px'}} />}
                 <form onSubmit={handleSubmit}>
                 <input type="file" onChange={(e) => handleFileUpload(e)} name="image" className="form-control" placeholder='Image'/>
                 </form>
@@ -100,6 +102,8 @@ function EditConcert(props) {
             <div>
                 <input type="submit" value="Submit" />
             </div>
+            <br/>
+            <Link to="/concerts"><button>Back to concerts</button></Link>
             </form>
             <p>Or</p>
 
