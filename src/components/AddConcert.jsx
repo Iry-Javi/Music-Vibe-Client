@@ -30,10 +30,11 @@ function NewConcert() {
 
     const handleSubmit =  (e) => {
         e.preventDefault();
+    
         const storedToken = localStorage.getItem('authToken');
         const addConcert = {
             title, image, description, country,
-            city, street, postalCode, houseNumber
+            city, street, postalCode, houseNumber,
         }
 
         console.log({addConcert})
@@ -53,7 +54,7 @@ function NewConcert() {
 
                 <input type="text" value={title} onChange={(e)=> setTitle(e.target.value)} name="title" className="form-control" placeholder='Title'/>
                 <br/>
-                <input type="text" value={description} onChange={(e)=> setDescription(e.target.value)} name="description" className="form-control" placeholder='Description'/>
+                <textarea type="text" value={description} onChange={(e)=> setDescription(e.target.value)} name="description" className="form-control" placeholder='Description'></textarea>
                 <br/>
                 <input type="text" value={country} onChange={(e) => setCountry(e.target.value)} name="country" className="form-control" placeholder='Country'/>
                 <br/>
@@ -66,13 +67,14 @@ function NewConcert() {
                 <input type="text" value={postalCode} onChange={(e) => setPostalCode(e.target.value)} name="postal_code" className="form-control" placeholder='Postal code'/>
                 <br/>
 
-                {concert && concert.image && <img src={concert.image} alt={"concert_image"} style={{width: '80px', height: '80px'}} />}
+                {concert && concert.image && <img src={concert.image} alt={"concert_image"} style={{width: '300px', height: '300px'}} />}
                 <form onSubmit={handleSubmit}>
                 <input type="file" onChange={(e) => handleFileUpload(e)} name="image" className="form-control" placeholder='Image'/>
                 </form>
                 <br/>
         <div>
             <button type="submit" className="btn btn-info text-light">Add New Concert</button>
+        
         </div>
             </form>
         </div>    

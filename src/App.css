@@ -2,6 +2,21 @@
   text-align: center;
 }
 
+body {
+  color: white;
+  background: rgb(2,0,36);
+  background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(66,11,88,1) 45%, rgba(48,111,124,1) 100%);
+
+}
+
+
+
+nav {
+  color: white;
+  background: rgb(2,0,36);
+  background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(140,45,179,1) 47%, rgba(0,212,255,1) 100%);
+}
+
 .App-logo {
   height: 40vmin;
   pointer-events: none;

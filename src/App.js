@@ -10,6 +10,7 @@ import EditConcert from './pages/EditConcert';
 import ConcertCard from './components/ConcertCard';
 import ProfilePage from './pages/ProfilePage';
 // import SearchBar from '../components/SearchBar'
+import CommentForm from './components/CommentForm'
 import './App.css';
 
 
@@ -32,6 +33,7 @@ function App() {
         <Route path='/cardconcerts' element={<ConcertCard/>} />
         <Route path='/profile' element={<ProfilePage/>} />
         {/* <Route path='/search' element={<SearchBar/>} /> */}
+        <Route path='/commentform' element={<CommentForm/>} />
       </Routes>
       </div>
           </div>
