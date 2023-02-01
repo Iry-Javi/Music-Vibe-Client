@@ -27,20 +27,21 @@ import axios from "axios";
 
     }
     return (
-        <div className="list-group mb-4 p-5 h-100" style={{maxWidth: '600px'}}>
-  <ul className="list-group list-group-flush">
-    <li className="list-group-item">   
-       <form onSubmit={handleSubmit}>
+    <div className="d-lg-flex justify-content-center">
+    <div className="list-group mb-4 p-5 h-100 bg-black" style={{maxWidth: '600px'}}>
+        <ul className="list-group list-group-flush">
+            <li className="list-group-item bg-dark">   
+            <form onSubmit={handleSubmit}>
             <input type="text" name="username" className="form-control mb-2" value={user.username} onChange={handleChange} placeholder='Username'/>
-            
             <input type="password" name="password" className="form-control mb-2" value={user.password}  onChange={handleChange} placeholder='Password'/>
-            
             <button type="submit" className="btn btn-light btn-sm m-1 ">Log In</button>
            </form>
-        </li>
-   
-    </ul>
-</div>
+            </li>
+        </ul>
+    </div>
+    </div>
+    
+
     )
 }
 
