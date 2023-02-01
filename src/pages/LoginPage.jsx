@@ -27,15 +27,13 @@ import axios from "axios";
 
     }
     return (
-        <div class="card width: 18rem;">
-  <div class="card-header">
-  </div>
-  <ul class="list-group list-group-flush">
-    <li class="list-group-item">   
+        <div className="list-group mb-4 p-5 h-100" style={{maxWidth: '600px'}}>
+  <ul className="list-group list-group-flush">
+    <li className="list-group-item">   
        <form onSubmit={handleSubmit}>
-            <input type="text" name="username" class="form-control mb-2" value={user.username} onChange={handleChange} placeholder='Username'/>
+            <input type="text" name="username" className="form-control mb-2" value={user.username} onChange={handleChange} placeholder='Username'/>
             
-            <input type="password" name="password" class="form-control mb-2" value={user.password}  onChange={handleChange} placeholder='Password'/>
+            <input type="password" name="password" className="form-control mb-2" value={user.password}  onChange={handleChange} placeholder='Password'/>
             
             <button type="submit" className="btn btn-light btn-sm m-1 ">Log In</button>
            </form>

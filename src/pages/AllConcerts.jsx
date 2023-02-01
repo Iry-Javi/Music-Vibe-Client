@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 
 function AllConcerts() {
@@ -27,7 +27,14 @@ return (
         {concerts.map((concert) => {
             return(
                     <div className="col" key={concert._id}>
-                    <div className="card mb-3 p-5 h-100" style={{maxWidth: '540px'}}>
+                    <div className="card" style={{height: "30rem", width: "18rem", color:"black"}}>
+                        <img className="card-img-top" src={concert.image} alt="Card cap"/>
+                        <div className="card-body">
+                            <h5 className="card-title">{concert.title}</h5>
+                            <NavLink to={`/singleconcert/${concert._id}`} className="btn btn-primary">Go to concert</NavLink>
+                        </div>
+                        </div>
+                    {/* <div className="card mb-3 p-5 h-100" style={{maxWidth: '540px'}}>
                         <div className="row g-0">
                             <div className="col-md-4">
                             <img src={concert.image} className="text-center" alt="..."   style={{objectFit: 'scale-down', width: '200px', height: '200px'}}/>
@@ -39,7 +46,7 @@ return (
                             </div>
                             </div>
                         </div>
-                    </div>
+                    </div> */}
                 </div>
                 
             )

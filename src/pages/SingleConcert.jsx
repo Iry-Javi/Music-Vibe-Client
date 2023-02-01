@@ -6,6 +6,7 @@ import { useParams } from 'react-router-dom';
 function SingleConcert() {
 const [concert, setConcert] = useState({});
 const {concertId}=useParams()
+const [comment, setComment] = useState('')
 
 
 const getOneConcert = () => {
@@ -17,7 +18,18 @@ const getOneConcert = () => {
     setConcert(response.data);
     })
 }
+const handleSubmit = (e) => {
+    e.preventDefault()
+    const storedToken = localStorage.getItem('authToken')
+    axios
+    .post(`${process.env.REACT_APP_API_URL}/api/comments`, {comment, concert: concertId}, { headers: { Authorization: `Bearer ${storedToken}`}})
+    .then(() => {
+        getOneConcert()
+        setComment('')
+    })
 
+
+}
 useEffect(() => {
     getOneConcert();
     // eslint-disable-next-line
@@ -40,22 +52,30 @@ return (
             <li className="list-group-item text-bg-dark">Postal Code: {concert.postalCode}</li>
         </ul>
        
-        {/* <button type="submit">Send Comment</button> */}
+        
       
         <div className="ConcertDetails">
         <div className="card-title text-center">
-        {concert.comments && concert.comments.map(comment => {
-            return (
-                <div>{comment.comment}</div>
-                
-            )
-        })
-        }
+        
         <br/>
         <Link to="/concerts"><button className="btn btn-light btn-sm m-1 ">Back to concerts list</button></Link>
         {concert &&  (<Link to={`/concerts/edit/${concert._id}`}><button className="btn btn-light btn-sm m-1 ">Edit Concert</button></Link>)}
+        <button className="btn btn-light btn-sm m-1" value={comment} type="submit">Add a comment</button>
         </div> 
-        </div>                          
+        </div>
+        <form onSubmit={handleSubmit}>
+        <textarea type="text" value={comment} onChange={(e) => setComment(e.target.value)} name="comment" className="form-control" placeholder='Comment'></textarea>
+        <button className="btn btn-light btn-sm m-1" type="submit">Create comment</button>
+        </form>
+
+        {concert.comments && concert.comments.map(comment => {
+            return (
+                <div>{comment.comment} - {comment.user.username}</div>
+                
+
+            )
+        })
+        }                        
     </div>
     </div>
           
