@@ -31,29 +31,43 @@ const ProfilePage = props => {
             .catch(err => console.error(err))
         }
 
-    return (
-    <>
-        <div>
-          <p>Welcome to your profile {user.username}</p>
-          {user && user.image && <img src={user.image} alt={"profile_image"} style={{width: '80px', height: '80px', borderRadius: '75%'}} />}
-        </div>
-        <div>
-            {!isLoggedIn && (
-        <>
-          <Link to="/signup"> <button className="btn btn-light btn-sm m-1 ">Sign Up</button> </Link>
-          <Link to="/login"> <button className="btn btn-light btn-sm m-1 ">Login</button> </Link>
-        </>
-      )} 
-            {/* {isLoggedIn && <button onClick={logOutUser}>Log out</button>} */}
-            {isLoggedIn && 
-              <form onSubmit={handleSubmit}>
-              <input className="btn btn-light btn-sm m-1 " type="file" onChange={(e) => handleFileUpload(e)} />
-              <button type="submit" className="btn btn-light btn-sm m-1 ">Save profile image</button>
-              </form>}
-              <br/>
-              <div>
-              <Link to="/addconcerts"><button className="btn btn-light btn-sm m-1 ">Add Concert</button></Link>
-            </div>    
+  return (
+  <>
+    <div>
+      <p>Welcome to your profile {user && user.username}</p>
+      {user && user.image && <img src={user.image} alt={"profile_image"} style={{width: '80px', height: '80px', borderRadius: '75%'}} />}
+    </div>
+        {isLoggedIn && 
+          <form onSubmit={handleSubmit}>
+          <input className="btn btn-light btn-sm m-1 " type="file" onChange={(e) => handleFileUpload(e)} />
+          <button type="submit" className="btn btn-light btn-sm m-1 ">Save profile image</button>
+          </form>}
+          <br/>
+          <div>
+            <Link to="/addconcerts"><button className="btn btn-light btn-sm m-1 ">Add Concert</button></Link>
+              
+              
+          <div className="row row-cols-1 row-cols-md-4 g-3 m-5">
+          {user.concert && user.concert.map(singleConcert => {
+            return <div key={singleConcert._id}>
+
+              
+              <div className="card mb-3 p-5 h-100" style={{maxWidth: '540px'}}>
+              <div className="row g-0">
+              <div className="col-md-4">
+                <img src={singleConcert.image} className="text-center" alt="..."   style={{objectFit: 'scale-down', width: '200px', height: '200px'}}/>
+              </div>
+              <div className="col-md-15">
+              <div className="card-body">
+              <h5 className="card-title">
+                <Link to={`/singleconcert/${singleConcert._id}`}> {singleConcert.title}</Link></h5>
+              </div>
+              </div>
+              </div>
+              </div>
+              </div>
+      })}
+      </div>    
     </div>
     </>
  )

@@ -80,7 +80,7 @@ function EditConcert(props) {
 
                 <input type="text" value={title} onChange={(e)=> setTitle(e.target.value)} name="title" className="form-control" placeholder='Title'/>
                 <br/>
-                <input type="text" value={description} onChange={(e)=> setDescription(e.target.value)} name="description" className="form-control" placeholder='Description'/>
+                <textarea type="text" value={description} onChange={(e)=> setDescription(e.target.value)} name="description" className="form-control" placeholder='Description'></textarea>
                 <br/>
                 <input type="text" value={country} onChange={(e) => setCountry(e.target.value)} name="country" className="form-control" placeholder='Country'/>
                 <br/>
