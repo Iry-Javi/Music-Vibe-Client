@@ -22,9 +22,10 @@ const SignupPage = () => {
 
 
     return (
-    <div className="card mb-4 p-5 h-100 bg-dark" style={{Width: '400px'}}>
+    <div className="d-lg-flex justify-content-center">
+    <div className="card mb-4 p-5 h-100 bg-black" style={{Width: '400px'}}>
     <ul className="list-group list-group-flush">
-        <li className="list-group-item">   
+        <li className="list-group-item bg-dark">   
             <form onSubmit={handleSubmit}>
                 <input className="form-control mb-2" type="text" name="username" value={user.username} onChange={handleChange} placeholder= "Username"/>
                 <input className="form-control mb-2" type="text" name="email" value={user.email}  onChange={handleChange} placeholder= "Email"/>
@@ -33,7 +34,8 @@ const SignupPage = () => {
             </form>
         </li>
     </ul>
-</div>
+    </div>
+    </div>
     )
 }
 

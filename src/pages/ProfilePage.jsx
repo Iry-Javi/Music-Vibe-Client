@@ -33,10 +33,10 @@ const ProfilePage = props => {
 
   return (
   <>
-    <div>
+      <div>
       <p>Welcome to your profile {user && user.username}</p>
       {user && user.image && <img src={user.image} alt={"profile_image"} style={{width: '80px', height: '80px', borderRadius: '75%'}} />}
-    </div>
+      </div>
         {isLoggedIn && 
           <form onSubmit={handleSubmit}>
           <input className="btn btn-light btn-sm m-1 " type="file" onChange={(e) => handleFileUpload(e)} />
@@ -44,15 +44,14 @@ const ProfilePage = props => {
           </form>}
           <br/>
           <div>
-            <Link to="/addconcerts"><button className="btn btn-light btn-sm m-1 ">Add Concert</button></Link>
-              
-              
-          <div className="row row-cols-1 row-cols-md-4 g-3 m-5">
-          {user.concert && user.concert.map(singleConcert => {
-            return <div key={singleConcert._id}>
+          <Link to="/addconcerts"><button className="btn btn-light btn-sm m-1 ">Add Concert</button></Link>
 
               
-              <div className="card mb-3 p-5 h-100" style={{maxWidth: '540px'}}>
+          <div className="row row-cols-1 row-cols-md-4 g-3 m-3 bg-black">
+          {user.concert && user.concert.map(singleConcert => {
+            return <div className="col" key={singleConcert._id}>
+
+              <div className="card mb-3 p-5 h-100 bg-dark" style={{maxWidth: '540px'}}>
               <div className="row g-0">
               <div className="col-md-4">
                 <img src={singleConcert.image} className="text-center" alt="..."   style={{objectFit: 'scale-down', width: '200px', height: '200px'}}/>
@@ -60,7 +59,7 @@ const ProfilePage = props => {
               <div className="col-md-15">
               <div className="card-body">
               <h5 className="card-title">
-                <Link to={`/singleconcert/${singleConcert._id}`}> {singleConcert.title}</Link></h5>
+                <Link to={`/singleconcert/${singleConcert._id}`}className="btn btn-danger">Go to concert<br/> {singleConcert.title}</Link></h5>
               </div>
               </div>
               </div>

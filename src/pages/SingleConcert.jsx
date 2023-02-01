@@ -37,7 +37,6 @@ useEffect(() => {
 
 return (
          
-            
     <div className="card text-start fw-bolt mt-2 bg-black">
     <div className="card-body">
     <h4 className="card-title text-center">Title: {concert.title}</h4>
@@ -60,22 +59,23 @@ return (
         <br/>
         <Link to="/concerts"><button className="btn btn-light btn-sm m-1 ">Back to concerts list</button></Link>
         {concert &&  (<Link to={`/concerts/edit/${concert._id}`}><button className="btn btn-light btn-sm m-1 ">Edit Concert</button></Link>)}
-        <button className="btn btn-light btn-sm m-1" value={comment} type="submit">Add a comment</button>
+        {/* <button className="btn btn-light btn-sm m-1" value={comment} type="submit">Add a comment</button> */}
         </div> 
         </div>
         <form onSubmit={handleSubmit}>
         <textarea type="text" value={comment} onChange={(e) => setComment(e.target.value)} name="comment" className="form-control" placeholder='Comment'></textarea>
         <button className="btn btn-light btn-sm m-1" type="submit">Create comment</button>
         </form>
-
+        <div className="card text-start fw-bolt mt-2 bg-dark">
+        <div className="card-body">
         {concert.comments && concert.comments.map(comment => {
             return (
-                <div>{comment.comment} - {comment.user.username}</div>
-                
-
-            )
-        })
-        }                        
+                <div>{comment.user.username} - {comment.comment}</div>
+        )
+    })
+    }   
+        </div>
+        </div>                     
     </div>
     </div>
           
