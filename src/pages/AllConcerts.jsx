@@ -4,9 +4,8 @@ import { useState, useEffect } from 'react';
 
 function AllConcerts() {
 const [concerts, setConcerts] = useState([]);
-
 const getAllListConcerts = () => {
-    const storedToken = localStorage.getItem('authToken')
+const storedToken = localStorage.getItem('authToken')
 
     axios
     .get(`${process.env.REACT_APP_API_URL}/api/concerts`, { headers: { Authorization: `Bearer ${storedToken}`}})
@@ -19,10 +18,9 @@ useEffect(() => {
     getAllListConcerts();
 }, [] );
 
+
 return (
-
     <div>  
-
         <div className="row row-cols-1 row-cols-md-4 g-3 m-3 bg-black">
         {concerts.map((concert) => {
             return(
@@ -43,7 +41,6 @@ return (
                         </div>
                     </div>
                 </div>
-                
             )
         })}
         </div>

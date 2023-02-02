@@ -9,7 +9,6 @@ const {concertId}=useParams()
 const [comment, setComment] = useState('')
 const [isLoading , setIsLoading] = useState(true)
 
-
 const getOneConcert = () => {
     const storedToken = localStorage.getItem('authToken')
 
@@ -29,20 +28,17 @@ const handleSubmit = (e) => {
         getOneConcert()
         setComment('')
     })
-
-
 }
-useEffect(() => {
-    getOneConcert();
-    // eslint-disable-next-line
-}, [] );
+    useEffect(() => {
+        getOneConcert();
+        // eslint-disable-next-line
+    }, [] );
 
-if(isLoading){
-    return <p>Loading</p>
-}
+    if(isLoading){
+        return <p>Loading</p>
+    }
 
 return (
-         
     <div className="card text-start fw-bolt mt-2 bg-black">
     <div className="card-body">
     <h4 className="card-title text-center">Title: {concert.title}</h4>
@@ -55,17 +51,12 @@ return (
             <li className="list-group-item text-bg-dark">Street: {concert.street}</li>
             <li className="list-group-item text-bg-dark">House Number: {concert.houseNumber}</li>
             <li className="list-group-item text-bg-dark">Postal Code: {concert.postalCode}</li>
-        </ul>
-       
-        
-      
+        </ul>                    
         <div className="ConcertDetails">
-        <div className="card-title text-center">
-        
+        <div className="card-title text-center">        
         <br/>
         <Link to="/concerts"><button className="btn btn-light btn-sm m-1 ">Back to concerts list</button></Link>
         {concert &&  (<Link to={`/concerts/edit/${concert._id}`}><button className="btn btn-light btn-sm m-1 ">Edit Concert</button></Link>)}
-        {/* <button className="btn btn-light btn-sm m-1" value={comment} type="submit">Add a comment</button> */}
         </div> 
         </div>
         <form onSubmit={handleSubmit}>
@@ -83,9 +74,7 @@ return (
         </div>
         </div>                     
     </div>
-    </div>
-          
-
+    </div>          
 )
 }
 

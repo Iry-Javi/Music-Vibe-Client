@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import {AuthContext} from "../context/auth.context"
 
-
 function NewConcert() {
     const { concert, setUser, removeToken, storeToken } = useContext(AuthContext);
     const navigate = useNavigate();
@@ -15,11 +14,10 @@ function NewConcert() {
     const [street, setStreet] = useState("");
     const [houseNumber, setHouseNumber] = useState("");
     const [postalCode, setPostalCode] = useState("");
-
     const handleFileUpload = (e) => {
-        const uploadData = new FormData();
+    const uploadData = new FormData();
+
         uploadData.append("image", e.target.files[0]);
-     
         axios.post(`${process.env.REACT_APP_API_URL}/api/upload`, uploadData)
           .then(response => {
             setImage(response.data.image);
@@ -27,7 +25,6 @@ function NewConcert() {
           .catch(err => console.log("Error while uploading the file: ", err));
       };
     
-
     const handleSubmit =  (e) => {
         e.preventDefault();
     
@@ -37,7 +34,6 @@ function NewConcert() {
             city, street, postalCode, houseNumber,
         }
 
-        console.log({addConcert})
         axios
         .post(`${process.env.REACT_APP_API_URL}/api/concerts`, addConcert, { headers: { Authorization: `Bearer ${storedToken}`}})
         .then( async (response) => {
@@ -71,16 +67,14 @@ function NewConcert() {
                 <br/>
                 <input type="text" value={postalCode} onChange={(e) => setPostalCode(e.target.value)} name="postal_code" className="form-control" placeholder='Postal code'/>
                 <br/>
-
                 {concert && concert.image && <img src={concert.image} alt={"concert_image"} style={{width: '300px', height: '300px'}} />}
                 <form onSubmit={handleSubmit}>
                 <input type="file" onChange={(e) => handleFileUpload(e)} name="image" className="form-control" placeholder='Image'/>
                 </form>
                 <br/>
-        <div>
+          <div>
             {image !== "" && <button type="submit" className="btn btn-info text-light">Add New Concert</button>}
-        
-        </div>
+          </div>
             </form>
         </div>    
     </div>

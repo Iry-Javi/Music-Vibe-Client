@@ -43,7 +43,6 @@ const HomePage = props => {
         </button>
       </div>
       </div>
-      
  )
 }
 
