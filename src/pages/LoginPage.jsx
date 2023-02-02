@@ -7,10 +7,10 @@ import axios from "axios";
     const [user, setUser] = useState({username: '', password: ''});
     const navigate = useNavigate();
     const {storeToken, authenticateUser} = useContext(AuthContext);
-
     const handleChange = (e) => {
-        const name = e.target.name;
-        const value = e.target.value;
+    const name = e.target.name;
+    const value = e.target.value;
+
         setUser(user => ({...user, [name]: value}))
     }
 
@@ -24,8 +24,8 @@ import axios from "axios";
         navigate("/")
     })
         .catch(err => console.error(err))
-
     }
+
     return (
     <div className="d-lg-flex justify-content-center">
     <div className="list-group mb-4 p-5 h-100 bg-black" style={{maxWidth: '600px'}}>
@@ -39,9 +39,7 @@ import axios from "axios";
             </li>
         </ul>
     </div>
-    </div>
-    
-
+    </div>   
     )
 }
 

@@ -9,12 +9,9 @@ function Navbar() {
   return (
    <nav className="navbar navbar-expand mb-5">
    <div className="container-fluid justify-content-space-around">
-  
       <Link to="/">
         <img src={Home} className="navbar-brand" alt="..." style={{width: '50px', height: '60px'}}/>
       </Link>
-      
-
       {isLoggedIn && (
         <div className="d-flex">
         <Link to="/concerts"><button className="btn btn-light btn-sm m-1" >All Concerts</button></Link>
@@ -22,7 +19,6 @@ function Navbar() {
           <button className="btn btn-light btn-sm m-1" onClick={logOutUser}>Logout</button>
         </div>
       )}
- 
       {!isLoggedIn && (
         <div className="d-flex-end">
           <Link to="/signup"> <button className="btn btn-light btn-sm m-1 text-bg-gray">Sign Up</button> </Link>

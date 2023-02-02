@@ -3,16 +3,13 @@ import { useState, useContext } from "react";
 import axios from "axios";
 import {AuthContext} from "../context/auth.context"
 
-const ProfilePage = props => {
+    const ProfilePage = props => {
     const [image, setImage] = useState("");
     const { user, setUser, isLoggedIn, removeToken, storeToken } = useContext(AuthContext);
-
     const handleFileUpload = (e) => {
-     
-        const uploadData = new FormData();
-     
-        uploadData.append("image", e.target.files[0]);
-     
+    const uploadData = new FormData();
+        
+    uploadData.append("image", e.target.files[0]);
         axios.post(`${process.env.REACT_APP_API_URL}/api/upload`, uploadData)
           .then(response => {
             setImage(response.data.image);
@@ -31,11 +28,6 @@ const ProfilePage = props => {
           await storeToken(authToken)
           await setUser(updatedUser)
       })    
-        
-        // .then((response)=> {
-            //     setUser(response.data.updatedUser);
-            //     setImage("")
-            // })
             .catch(err => console.error(err))
         }
 
@@ -54,7 +46,6 @@ const ProfilePage = props => {
           <div>
           <Link to="/addconcerts"><button className="btn btn-light btn-sm m-1 ">Add Concert</button></Link>
 
-              
           <div className="row row-cols-1 row-cols-md-4 g-3 m-3 bg-black">
           {user?.concert && user.concert.map(singleConcert => {
             return <div className="col" key={singleConcert._id}>

@@ -6,7 +6,7 @@ import {useContext} from 'react';
 import { Link } from 'react-router-dom';
  
 function EditConcert(props) {
-  const { concert, removeToken, storeToken, setUser} = useContext(AuthContext);
+    const { concert, removeToken, storeToken, setUser} = useContext(AuthContext);
     const [title, setTitle] = useState("");
     const [image, setImage] = useState("");
     const [description, setDescription] = useState("");
@@ -15,9 +15,9 @@ function EditConcert(props) {
     const [street, setStreet] = useState("");
     const [houseNumber, setHouseNumber] = useState("");
     const [postalCode, setPostalCode] = useState("");
+    const handleFileUpload = (e) => {
+    const uploadData = new FormData();
 
-        const handleFileUpload = (e) => {
-        const uploadData = new FormData();
         uploadData.append("image", e.target.files[0]);
      
         axios.post(`${process.env.REACT_APP_API_URL}/api/upload`, uploadData)
@@ -29,14 +29,14 @@ function EditConcert(props) {
 
 
   const { concertId } = useParams();  
-  
   const navigate = useNavigate()
- 
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    const storedToken = localStorage.getItem('authToken');
 
+    const storedToken = localStorage.getItem('authToken');
     const updatedConcert = {title, image, description, country, city, street, houseNumber, postalCode}
+
     axios.put(`${process.env.REACT_APP_API_URL}/api/concerts/${concertId}`, updatedConcert,{ headers: { Authorization: `Bearer ${storedToken}`}} )
         .then(async (response) => {
           const authToken = response.data.authToken;
@@ -61,14 +61,12 @@ function EditConcert(props) {
         await setUser(updatedUser)
       navigate(`/concerts/`)
     })
-      // .then(() => {
-      //   navigate("/concerts");
-      // })
       .catch((err) => console.log(err));
   };  
 
    useEffect(() => {  
-    const storedToken = localStorage.getItem('authToken');                                // <== ADD
+    const storedToken = localStorage.getItem('authToken');
+
      axios
        .get(`${process.env.REACT_APP_API_URL}/api/concerts/${concertId}`, { headers: { Authorization: `Bearer ${storedToken}` } })
        .then((response) => {
@@ -82,8 +80,6 @@ function EditConcert(props) {
          setStreet(oneConcert.street);
          setHouseNumber(oneConcert.houseNumber);
          setPostalCode(oneConcert.postalCode);
-         
-
        })
        .catch((error) => console.log(error));
      
@@ -110,22 +106,18 @@ function EditConcert(props) {
                 <br/>
 
                 {concert && concert.image && <img src={concert.image} alt={"concert_image"} style={{width: '300', height: '300px'}} />}
-                {/* <form onSubmit={handleSubmit}> */}
                 <input type="file" onChange={(e) => handleFileUpload(e)} name="image" className="form-control" placeholder='Image'/>
-                {/* </form> */}
                 <br/>
-
-            <div>
+              <div>
                 { image !== "" && <input className="btn btn-info text-light" type="submit" value="Submit" />}
-            </div>
-            <br/>
-            <Link to="/concerts"><button className="btn btn-info text-light">Back to concerts</button></Link>
-            </form>
-            <br/>
-            <p>Or</p>
-
-      <button className="btn btn-info text-light" onClick={deleteConcert}>Delete Concert</button>
-    </div>
+              </div>
+              <br/>
+              <Link to="/concerts"><button className="btn btn-info text-light">Back to concerts</button></Link>
+              </form>
+              <br/>
+              <p>Or</p>
+              <button className="btn btn-info text-light" onClick={deleteConcert}>Delete Concert</button>
+        </div>
   );
 }
  

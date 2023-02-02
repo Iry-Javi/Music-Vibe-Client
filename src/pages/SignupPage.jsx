@@ -2,13 +2,13 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from 'axios';
 
-const SignupPage = () => {
+    const SignupPage = () => {
     const [user, setUser] = useState({username: '', email: '', password: ''});
     const navigate = useNavigate()
-
+    
     const handleChange = (e) => {
-        const name = e.target.name;
-        const value = e.target.value;
+    const name = e.target.name;
+    const value = e.target.value;
         setUser(user => ({...user, [name]: value}))
     }
 
