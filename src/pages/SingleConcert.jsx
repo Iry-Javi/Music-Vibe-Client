@@ -7,6 +7,7 @@ function SingleConcert() {
 const [concert, setConcert] = useState({});
 const {concertId}=useParams()
 const [comment, setComment] = useState('')
+const [isLoading , setIsLoading] = useState(true)
 
 
 const getOneConcert = () => {
@@ -16,6 +17,7 @@ const getOneConcert = () => {
     .get(`${process.env.REACT_APP_API_URL}/api/concerts/${concertId}`, { headers: { Authorization: `Bearer ${storedToken}`}})
     .then((response) => {
     setConcert(response.data);
+    setIsLoading(false)
     })
 }
 const handleSubmit = (e) => {
@@ -34,6 +36,10 @@ useEffect(() => {
     getOneConcert();
     // eslint-disable-next-line
 }, [] );
+
+if(isLoading){
+    return <p>Loading</p>
+}
 
 return (
          

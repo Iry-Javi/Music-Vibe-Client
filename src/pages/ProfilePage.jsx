@@ -5,7 +5,7 @@ import {AuthContext} from "../context/auth.context"
 
 const ProfilePage = props => {
     const [image, setImage] = useState("");
-    const { user, setUser, isLoggedIn, } = useContext(AuthContext);
+    const { user, setUser, isLoggedIn, removeToken, storeToken } = useContext(AuthContext);
 
     const handleFileUpload = (e) => {
      
@@ -22,12 +22,20 @@ const ProfilePage = props => {
 
       const handleSubmit = (e) => {
         e.preventDefault();
-
-        axios.put(`${process.env.REACT_APP_API_URL}/api/users`, {...user, image})
-            .then((response)=> {
-                setUser(response.data.updatedUser);
-                setImage("")
-            })
+        const storedToken = localStorage.getItem("authToken")
+        axios.put(`${process.env.REACT_APP_API_URL}/api/users`, {...user, image}, { headers: { Authorization: `Bearer ${storedToken}`}} )
+        .then(async (response) => {
+          const authToken = response.data.authToken;
+          const updatedUser = response.data.updatedUser;
+          await removeToken()
+          await storeToken(authToken)
+          await setUser(updatedUser)
+      })    
+        
+        // .then((response)=> {
+            //     setUser(response.data.updatedUser);
+            //     setImage("")
+            // })
             .catch(err => console.error(err))
         }
 
