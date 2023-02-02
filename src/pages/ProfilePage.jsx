@@ -48,7 +48,7 @@ const ProfilePage = props => {
 
               
           <div className="row row-cols-1 row-cols-md-4 g-3 m-3 bg-black">
-          {user.concert && user.concert.map(singleConcert => {
+          {user?.concert && user.concert.map(singleConcert => {
             return <div className="col" key={singleConcert._id}>
 
               <div className="card mb-3 p-5 h-100 bg-dark" style={{maxWidth: '540px'}}>
