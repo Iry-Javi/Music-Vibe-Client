@@ -5,7 +5,7 @@ import {AuthContext} from "../context/auth.context"
 
 
 function NewConcert() {
-    const { concert} = useContext(AuthContext);
+    const { concert, setUser, removeToken, storeToken } = useContext(AuthContext);
     const navigate = useNavigate();
     const [title, setTitle] = useState("");
     const [image, setImage] = useState("");
@@ -40,8 +40,13 @@ function NewConcert() {
         console.log({addConcert})
         axios
         .post(`${process.env.REACT_APP_API_URL}/api/concerts`, addConcert, { headers: { Authorization: `Bearer ${storedToken}`}})
-        .then(() => {
-            setTitle(''); setImage(''); setDescription(''); setCountry(''); setCity(''); setStreet(''); setHouseNumber(''); setPostalCode('');
+        .then( async (response) => {
+          const authToken = response.data.authToken;
+          const updatedUser = response.data.updatedUser;
+          await removeToken()
+          await storeToken(authToken)
+          await setUser(updatedUser)
+          setTitle(''); setImage(''); setDescription(''); setCountry(''); setCity(''); setStreet(''); setHouseNumber(''); setPostalCode('');
           navigate("/concerts");
         });
     };
@@ -73,7 +78,7 @@ function NewConcert() {
                 </form>
                 <br/>
         <div>
-            <button type="submit" className="btn btn-info text-light">Add New Concert</button>
+            {image !== "" && <button type="submit" className="btn btn-info text-light">Add New Concert</button>}
         
         </div>
             </form>

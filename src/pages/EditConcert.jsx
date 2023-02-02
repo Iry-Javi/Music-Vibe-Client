@@ -6,7 +6,7 @@ import {useContext} from 'react';
 import { Link } from 'react-router-dom';
  
 function EditConcert(props) {
-  const { concert} = useContext(AuthContext);
+  const { concert, removeToken, storeToken, setUser} = useContext(AuthContext);
     const [title, setTitle] = useState("");
     const [image, setImage] = useState("");
     const [description, setDescription] = useState("");
@@ -34,20 +34,36 @@ function EditConcert(props) {
  
   const handleSubmit = (e) => {
     e.preventDefault();
-    
+    const storedToken = localStorage.getItem('authToken');
 
     const updatedConcert = {title, image, description, country, city, street, houseNumber, postalCode}
-    axios.put(`${process.env.REACT_APP_API_URL}/api/concerts/${concertId}`, updatedConcert)
-        .then(() => navigate(`/concerts/`))
+    axios.put(`${process.env.REACT_APP_API_URL}/api/concerts/${concertId}`, updatedConcert,{ headers: { Authorization: `Bearer ${storedToken}`}} )
+        .then(async (response) => {
+          const authToken = response.data.authToken;
+          const updatedUser = response.data.updatedUser;
+          await removeToken()
+          await storeToken(authToken)
+          await setUser(updatedUser)
+        navigate(`/concerts/`)
+      })
         .catch(err => console.log(err))
   }
 
-  const deleteConcert = () => {                    
+  const deleteConcert = () => {   
+    const storedToken = localStorage.getItem('authToken');                 
     axios
-      .delete(`${process.env.REACT_APP_API_URL}/api/concerts/${concertId}`)
-      .then(() => {
-        navigate("/concerts");
-      })
+      .delete(`${process.env.REACT_APP_API_URL}/api/concerts/${concertId}`,{ headers: { Authorization: `Bearer ${storedToken}`}})
+      .then(async (response) => {
+        const authToken = response.data.authToken;
+        const updatedUser = response.data.updatedUser;
+        await removeToken()
+        await storeToken(authToken)
+        await setUser(updatedUser)
+      navigate(`/concerts/`)
+    })
+      // .then(() => {
+      //   navigate("/concerts");
+      // })
       .catch((err) => console.log(err));
   };  
 
@@ -94,20 +110,21 @@ function EditConcert(props) {
                 <br/>
 
                 {concert && concert.image && <img src={concert.image} alt={"concert_image"} style={{width: '300', height: '300px'}} />}
-                <form onSubmit={handleSubmit}>
+                {/* <form onSubmit={handleSubmit}> */}
                 <input type="file" onChange={(e) => handleFileUpload(e)} name="image" className="form-control" placeholder='Image'/>
-                </form>
+                {/* </form> */}
                 <br/>
 
             <div>
-                <input type="submit" value="Submit" />
+                { image !== "" && <input className="btn btn-info text-light" type="submit" value="Submit" />}
             </div>
             <br/>
-            <Link to="/concerts"><button>Back to concerts</button></Link>
+            <Link to="/concerts"><button className="btn btn-info text-light">Back to concerts</button></Link>
             </form>
+            <br/>
             <p>Or</p>
 
-      <button onClick={deleteConcert}>Delete Concert</button>
+      <button className="btn btn-info text-light" onClick={deleteConcert}>Delete Concert</button>
     </div>
   );
 }

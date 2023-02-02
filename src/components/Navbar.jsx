@@ -24,10 +24,10 @@ function Navbar() {
       )}
  
       {!isLoggedIn && (
-        <>
+        <div className="d-flex-end">
           <Link to="/signup"> <button className="btn btn-light btn-sm m-1 text-bg-gray">Sign Up</button> </Link>
           <Link to="/login"> <button className="btn btn-light btn-sm m-1 text-bg-gray">Login</button> </Link>
-        </>
+        </div>
       )}
       </div>
     </nav>
